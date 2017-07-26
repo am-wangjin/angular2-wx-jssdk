@@ -1,0 +1,44 @@
+{
+  "name": "@am-ng/angular2-weixin-jsdk",
+  "version": "1.0.0",
+  "description": "微信jsapi",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "http://10.68.34.178/nexus3/repository/npm-private/"
+  },
+  "scripts": {
+    "tslint": "tslint -c ./tslint.json -e './src/**/*.d.ts' './src/**/*.ts'",
+    "build": "rm -rf aot dist && npm run tslint && ngc",
+    "postbuild": "npm run copy:scss",
+    "copy:scss": "scripts/copy.sh",
+    "shipit": "npm run build && npm publish"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/am-wangjin/angular2-wx-jssdk.git"
+  },
+  "keywords": [
+    "weixin"
+  ],
+  "author": "am",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/am-wangjin/angular2-wx-jssdk/issues"
+  },
+  "homepage": "https://github.com/am-wangjin/angular2-wx-jssdk#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@angular/core": "4.1.3",
+    "rxjs": "5.4.0",
+    "tslint": "^5.4.3",
+    "tslint-ionic-rules": "0.0.11",
+    "typescript": "2.3.4",
+    "zone.js": "0.8.12"
+  }
+}

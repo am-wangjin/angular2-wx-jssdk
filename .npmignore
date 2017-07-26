@@ -1,0 +1,13 @@
+src
+scripts
+node_modules
+.gitignore
+.npmignore
+.editorconfig
+tsconfig.json
+tslint.json
+.idea
+.vscode
+aot
+deploy-debug*
+yarn.lock
