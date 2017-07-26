@@ -1,50 +1,15 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { Config, ConfigProvider, setupConfig } from './config/config';
+export * from './config/config';
+export * from './providers/weixin_jssdk';
 
-const PROVIDERS: Array<any> = [
-];
-
-@NgModule({
-  imports: [
-    AlphaScrollModule.forRoot(),
-    BaiduMapModule.forRoot(),
-    ImageLoaderModule.forRoot(),
-    DownloadManagerModule.forRoot(),
-    OpenUrlModalModule.forRoot(),
-    RibbonModule.forRoot(),
-    SuperTabsModule.forRoot(),
-    StarRatingModule.forRoot(),
-    PipesModule.forRoot(),
-    NavButtonBarModule.forRoot(),
-    GalleryModule.forRoot(),
-    LazySelectModule.forRoot(),
-    AutoCompleteModule.forRoot(),
-    ImgFallbackModule.forRoot()
-  ],
-  exports: [
-    AlphaScrollModule,
-    BaiduMapModule,
-    ImageLoaderModule,
-    DownloadManagerModule,
-    OpenUrlModalModule,
-    RibbonModule,
-    SuperTabsModule,
-    StarRatingModule,
-    PipesModule,
-    NavButtonBarModule,
-    GalleryModule,
-    LazySelectModule,
-    AutoCompleteModule,
-    ImgFallbackModule
-  ]
-})
-export class ExtIonicModule {
+@NgModule()
+export class WexinJsapiModule {
   static forRoot(config?: Config): ModuleWithProviders {
     return {
-      ngModule: ExtIonicModule,
+      ngModule: WexinJsapiModule,
       providers: [
-        { provide: EXT_IONIC_CONFIG, useValue: config },
-        { provide: ConfigProvider, useFactory: setupConfig, deps: [EXT_IONIC_CONFIG] },
-        PROVIDERS
+        { provide: ConfigProvider, useFactory: setupConfig, deps: [config], multi: true }
       ]
     };
   }
