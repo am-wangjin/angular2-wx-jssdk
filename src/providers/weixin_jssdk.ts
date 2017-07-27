@@ -55,6 +55,9 @@ export class WeixinJssdkProvider {
   }
 
   invoke(name: string, req?: any): Promise<any> {
+    if (!this.isWeixinBrowser()) {
+      return Promise.reject('请在微信浏览器下使用微信jsapi');
+    }
     if (!this.inited) {
       return this.initConfig().then(() => {
         return this._invoke(name, req);
