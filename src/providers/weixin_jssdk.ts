@@ -10,7 +10,7 @@ export interface JsapiSignature {
 }
 
 export interface Config {
-  debug?: boolean;
+  debug: boolean;
   jsApiList: Array<string>;
 }
 
@@ -35,7 +35,7 @@ export class WeixinJssdkProvider {
       this.requestJsapiSignature.request()
         .then(v => {
           wx.config({
-            debug: me.requestJsapiSignature.getConfig().debug || true,
+            debug: me.requestJsapiSignature.getConfig().debug,
             appId: v.appId,
             timestamp: v.timestamp,
             nonceStr: v.nonceStr,
