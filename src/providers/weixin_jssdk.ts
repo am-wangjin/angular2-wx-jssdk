@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@angular/core';
-import { ConfigProvider } from '../config/config';
 
 declare var wx;
 
@@ -10,8 +9,15 @@ export interface JsapiSignature {
   signature: string;
 }
 
+export interface Config {
+  debug?: boolean;
+  jsApiList: Array<string>;
+}
+
 export interface RequestJsapiSignature {
   request(): Promise<JsapiSignature>;
+
+  getConfig(): Config;
 }
 
 @Injectable()
@@ -20,8 +26,7 @@ export class WeixinJssdkProvider {
   private inited: boolean = false;
 
   constructor(
-    @Inject('RequestJsapiSignature') private requestJsapiSignature: RequestJsapiSignature,
-    private config: ConfigProvider) {
+    @Inject('RequestJsapiSignature') private requestJsapiSignature: RequestJsapiSignature) {
   }
 
   private initConfig(): Promise<any> {
@@ -30,12 +35,12 @@ export class WeixinJssdkProvider {
       this.requestJsapiSignature.request()
         .then(v => {
           wx.config({
-            debug: me.config.get().debug,
+            debug: me.requestJsapiSignature.getConfig().debug || true,
             appId: v.appId,
             timestamp: v.timestamp,
             nonceStr: v.nonceStr,
             signature: v.signature,
-            jsApiList: me.config.get().jsApiList
+            jsApiList: me.requestJsapiSignature.getConfig().jsApiList
           });
         });
       wx.ready(() => {
@@ -55,6 +60,7 @@ export class WeixinJssdkProvider {
         return this._invoke(name, req);
       });
     }
+    return this._invoke(name, req);
   }
 
   private _invoke(name: string, req?: any): Promise<any> {
@@ -66,5 +72,9 @@ export class WeixinJssdkProvider {
         fail: (r) => { rejectFn(r); },
       }));
     });
+  }
+
+  isWeixinBrowser(): boolean {
+    return (navigator.userAgent.indexOf('MicroMessenger') !== -1);
   }
 }
