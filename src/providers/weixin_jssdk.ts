@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 declare var wx;
 
@@ -14,10 +14,10 @@ export interface Config {
   jsApiList: Array<string>;
 }
 
-export interface RequestJsapiSignature {
-  request(): Promise<JsapiSignature>;
+export abstract class RequestJsapiSignature {
 
-  getConfig(): Config;
+  abstract request(): Promise<JsapiSignature>;
+  abstract getConfig(): Config;
 }
 
 @Injectable()
@@ -26,7 +26,7 @@ export class WeixinJssdkProvider {
   private inited: boolean = false;
 
   constructor(
-    @Inject('RequestJsapiSignature') private requestJsapiSignature: RequestJsapiSignature) {
+    private requestJsapiSignature: RequestJsapiSignature) {
   }
 
   private initConfig(): Promise<any> {

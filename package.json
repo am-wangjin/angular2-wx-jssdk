@@ -1,6 +1,6 @@
 {
   "name": "@am-ng/angular2-weixin-jsdk",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "微信jsapi",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
