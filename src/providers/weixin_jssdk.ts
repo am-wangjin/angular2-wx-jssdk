@@ -69,11 +69,15 @@ export class WeixinJssdkProvider {
   private _invoke(name: string, req?: any): Promise<any> {
     const fn = wx[name] as Function;
     return new Promise<any>((resolveFn, rejectFn) => {
-      fn(Object.assign({}, req, {
-        success: (r) => { resolveFn(r); },
-        cancel: () => { resolveFn(null); },
-        fail: (r) => { rejectFn(r); },
-      }));
+      let params = req || {};
+      params = {
+        req, ... {
+          success: (r) => { resolveFn(r); },
+          cancel: () => { resolveFn(null); },
+          fail: (r) => { rejectFn(r); },
+        }
+      };
+      fn(params);
     });
   }
 
