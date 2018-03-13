@@ -71,11 +71,10 @@ export class WeixinJssdkProvider {
     return new Promise<any>((resolveFn, rejectFn) => {
       let params = req || {};
       params = {
-        req, ... {
-          success: (r) => { resolveFn(r); },
-          cancel: () => { resolveFn(null); },
-          fail: (r) => { rejectFn(r); },
-        }
+        ...params,
+        success: (r) => { resolveFn(r); },
+        cancel: () => { resolveFn(null); },
+        fail: (r) => { rejectFn(r); },
       };
       fn(params);
     });
